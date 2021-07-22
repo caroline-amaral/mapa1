@@ -1,0 +1,217 @@
+MAPA - ALGORITMOS E LÓGICA DE PROGRAMAÇÃO I - 2021B
+Aluna: Caroline Moreira do Amaral
+RA: 21140969-5
+
+
+Algoritmo "mapa"
+
+Função cadastrar():inteiro
+Var
+   cel: celular
+   cont: inteiro
+   cadastrado: logico
+Inicio
+   cadastrado <- falso
+   escreva("==============================")
+   escreva("=== Cadastrando um celular ===")
+   escreva("Usar somente letras minúsculas")
+   escreva("==============================")
+
+   escreva("Digite o código do celular: ")
+   leia(cel.codigo)
+   se (cel.codigo < 1) entao
+      escreva("Erro! O código deve ser maior que 0!")
+      retorne 0
+   senao
+      se (verificarCodigo(cel.codigo) = verdadeiro) entao
+         escreva("Erro! O código digitado já está cadastrado!")
+         retorne 0
+      senao
+         escreva("Digite o nome do celular: ")
+         leia(cel.nome)
+         escreva("Digite o/a fabricante: ")
+         leia(cel.fabricante)
+         escreva("Digite a cor do aparelho: ")
+         leia(cel.cor)
+         escreva("Digite o tipo de chip: ")
+         leia(cel.chip)
+         escreva("Digite o sistema operacional: ")
+         leia(cel.sistema)
+         escreva("Digite o preço do aparelho: ")
+         leia(cel.preco)
+
+         cont <- 1
+
+         enquanto (cadastrado = falso) e (cont <= 100) faca
+            se(celulares[cont].nome = "") entao
+               celulares[cont] <- cel
+
+               cadastrado <- verdadeiro
+            fim_se
+            cont <- cont + 1
+         fim_enquanto
+
+         retorne 1
+      fim_se
+   fim_se
+Fim_função
+
+funcao verificarCodigo(cod: inteiro):logico
+var
+   cont: inteiro
+   jaExiste: logico
+inicio
+   jaExiste <- falso
+   para cont de 1 ate 100 passo 1 faca
+      se(cod = celulares[cont].codigo) entao
+         jaExiste <- verdadeiro
+      fim_se
+   fim_para
+   retorne jaExiste
+fim_funcao
+
+procedimento listar()
+var
+   cont: inteiro
+   vazia: logico
+inicio
+   escreva("")
+   escreva("Listando celulares cadastrados")
+   escreva("")
+   vazia <- verdadeiro
+   para cont de 1 ate 100 passo 1 faca
+      se (celulares[cont].codigo <> 0) entao
+         vazia <- falso
+      fim_se
+   fim_para
+
+   se (vazia = verdadeiro) entao
+      escreva("Nenhum celular foi encontrado.")
+   senao
+      para cont de 1 ate 100 passo 1 faca
+         se (celulares[cont].codigo <> 0) entao
+            escreva("Cód:",celulares[cont].codigo," - ",celulares[cont].nome," - ",celulares[cont].fabricante," - R$",celulares[cont].preco)
+         fim_se
+      fim_para
+   fim_se
+fim_procedimento
+
+procedimento buscarCodigo()
+var
+   cont, codigo: inteiro
+   vazia, encontrado: logico
+inicio
+   escreva("")
+   escreva("Buscando celular pelo código")
+   escreva("")
+   vazia <- verdadeiro
+   para cont de 1 ate 100 passo 1 faca
+      se (celulares[cont].codigo <> 0) entao
+         vazia <- falso
+      fim_se
+   fim_para
+
+   se (vazia = verdadeiro) entao
+      escreva("Nenhum celular foi encontrado.")
+   senao
+      encontrado <- falso
+      escreva("Digite o código que deseja procurar: ")
+      leia(codigo)
+      se (codigo < 1) entao
+         escreva("Erro! O código deve ser maior que 0!")
+      senao
+         para cont de 1 ate 100 passo 1 faca
+            se (celulares[cont].codigo = codigo) entao
+               escreva("Cód:",celulares[cont].codigo," - ",celulares[cont].nome," - ",celulares[cont].fabricante," - R$",celulares[cont].preco)
+               encontrado <- verdadeiro
+            fim_se
+         fim_para
+         se(encontrado = falso) entao
+            escreva("Código não encontrado!")
+         fim_se
+      fim_se
+   fim_se
+fim_procedimento
+
+procedimento buscarNome()
+var
+   nome: caractere
+   cont: inteiro
+   vazia, encontrado: logico
+inicio
+   escreva("")
+   escreva("Buscando celular pelo nome")
+   escreva("")
+   vazia <- verdadeiro
+   para cont de 1 ate 100 passo 1 faca
+      se (celulares[cont].codigo <> 0) entao
+         vazia <- falso
+      fim_se
+   fim_para
+
+   se (vazia = verdadeiro) entao
+      escreva("Nenhum celular foi encontrado.")
+   senao
+      encontrado <- falso
+      escreva("Digite o nome que deseja procurar: ")
+      leia(nome)
+      se (nome = "") entao
+         escreva("Erro! Digite um nome válido.")
+      senao
+         para cont de 1 ate 100 passo 1 faca
+            se (celulares[cont].nome = nome) entao
+               escreva("Cód:",celulares[cont].codigo," - ",celulares[cont].nome," - ",celulares[cont].fabricante," - R$",celulares[cont].preco)
+               encontrado <- verdadeiro
+            fim_se
+         fim_para
+         se(encontrado = falso) entao
+            escreva("Nome não encontrado!")
+         fim_se
+      fim_se
+   fim_se
+fim_procedimento
+
+tipo
+   celular = registro
+      nome, fabricante, chip, sistema, cor: caractere
+      preco: real
+      codigo: inteiro
+   fim_registro
+
+Var
+   celulares: vetor[1..100] de celular
+   opcao, retorno: inteiro
+
+Inicio
+   repita
+      escreva("")
+      escreva("----- Menu Principal -----")
+      escreva("1 - Cadastrar celular")
+      escreva("2 - Listar todos celulares")
+      escreva("3 - Buscar celular pelo código")
+      escreva("4 - Buscar celular pelo nome")
+      escreva("0 - Sair do programa")
+      escreva("Digite a opção desejada: ")
+      leia(opcao)
+      limpa_tela
+
+      escolha(opcao)
+      caso seja 1 faça
+         retorno <- cadastrar()
+
+         se (retorno = 1) entao
+            escreva("Celular cadastrado com sucesso!")
+         fim_se
+      caso seja 2 faça
+         listar()
+      caso seja 3 faça
+         buscarCodigo()
+      caso seja 4 faça
+         buscarNome()
+      caso seja 0 faça
+         escreva("Finalizando o programa")
+      senão
+         escreva("Opção inválida!")
+      fim_escolha
+   ate (opcao = 0)
+Fim_algoritmo
